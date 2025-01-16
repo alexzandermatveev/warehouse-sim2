@@ -137,14 +137,13 @@ public class Distribution {
     private static double[][] createDecisionMatrix(List<Cell> cells, List<Product> products, Warehouse warehouse) {
         double[][] matrix = new double[cells.size()][3];
         Integer oneProductList = products.size() == 1 ? 0 : null;
-        int baseSize = cells.size();
-        if (oneProductList == null) {
-            // составляем матрицу решений
-            baseSize = products.size();
-        }
+
         for (int i = 0; i < cells.size(); i++) {
             Cell cell = cells.get(i);
-            Product product = products.get(oneProductList == null ? i : oneProductList);
+            Product product = (i < products.size())
+                    ? products.get(oneProductList == null ? i : oneProductList)
+                    : products.get(0); // Нулевой элемент для повторимости
+
             int distance = Math.abs(cell.getCoordinates().get("x") - warehouse.getAssemblyPoint().get("x"))
                     + Math.abs(cell.getCoordinates().get("y") - warehouse.getAssemblyPoint().get("y"));
             int levelWeight = warehouse.getShelving().relativeLevels.get(cell.getCoordinates().get("z"));
@@ -157,9 +156,7 @@ public class Distribution {
 
     // Нормализация матрицы для TOPSIS
     private static double[][] normalizeMatrix(double[][] matrix) {
-//        int rows = matrix.length;
         int cols = matrix[0].length;
-//        double[][] normalized = new double[rows][cols];
         for (int j = 0; j < cols; j++) {
             double sumSquares = 0;
             for (double[] doubles : matrix) {
@@ -303,7 +300,7 @@ public class Distribution {
 
 
     // Метод для расчёта целевой функции
-    private static double calculateObjectiveFunction(Solution solution, Warehouse warehouse) {
+    public static double calculateObjectiveFunction(Solution solution, Warehouse warehouse) {
         double totalValue = 0.0;
         Map<String, Integer> assemblyPoint = warehouse.getAssemblyPoint();
 

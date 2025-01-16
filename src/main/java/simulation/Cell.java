@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
-public class Cell implements Cloneable {
+public class Cell implements Cloneable, Comparable<Cell> {
     private String id;
     private Map<String, Integer> coordinates;
     private boolean occupied;
@@ -86,5 +86,27 @@ public class Cell implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return Objects.equals(id, cell.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+
+    @Override
+    public int compareTo(Cell o) {
+        int id = Integer.parseInt(this.id.substring(1));
+        int anotherId = Integer.parseInt(o.id.substring(1));
+
+        return Integer.compare(id, anotherId);
     }
 }

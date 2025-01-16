@@ -1,5 +1,7 @@
 package simulation;
 
+import simulation.genetic.GeneticSolution;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,22 +32,15 @@ public class WarehouseApp {
 
         warehouse.addCells(cells);
 
-        System.out.printf("ЦФ, рандом: %,.2f %n", Distribution.distributeProductsRandomly(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
-        System.out.printf("ЦФ, TOPSIS: %,.2f %n", Distribution.distributeWithTOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
-        System.out.printf("ЦФ, ELECTRE_TRI: %,.2f %n", Distribution.distributeWithELECTRE_TRI(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
-        System.out.printf("ЦФ, ELECTRE_TRI_and_TOPSIS: %,.2f %n", Distribution.distributeWithELECTRE_TRI_and_TOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+//        System.out.printf("ЦФ, рандом: %,.2f %n", Distribution.distributeProductsRandomly(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+//        System.out.printf("ЦФ, TOPSIS: %,.2f %n", Distribution.distributeWithTOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+//        System.out.printf("ЦФ, ELECTRE_TRI: %,.2f %n", Distribution.distributeWithELECTRE_TRI(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+//        System.out.printf("ЦФ, ELECTRE_TRI_and_TOPSIS: %,.2f %n", Distribution.distributeWithELECTRE_TRI_and_TOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
 
+        GeneticSolution geneticSolution = GeneticSolution.runGeneticAlgorithm(Warehouse.copy(warehouse),
+                new ArrayList<Product>(products), 10, 300000);
 
-//        System.out.println("Склад и товары в JSON формате:");
-//        System.out.println(warehouse.toJson());
-//        try {
-//            Warehouse warehouse = loadWarehouseFromFile("warehouse.json");
-//
-//            System.out.println("Склад из JSON:");
-//            System.out.println(warehouse.toJson());
-//
-//        } catch (IOException e) {
-//            System.err.println("Ошибка чтения JSON: " + e.getMessage());
-//        }
+        System.out.printf("ЦФ, Генетический алгоритм: %,.2f %n", geneticSolution.getFitness());
+
     }
 }
