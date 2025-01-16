@@ -32,13 +32,13 @@ public class WarehouseApp {
 
         warehouse.addCells(cells);
 
-//        System.out.printf("ЦФ, рандом: %,.2f %n", Distribution.distributeProductsRandomly(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
-//        System.out.printf("ЦФ, TOPSIS: %,.2f %n", Distribution.distributeWithTOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
-//        System.out.printf("ЦФ, ELECTRE_TRI: %,.2f %n", Distribution.distributeWithELECTRE_TRI(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
-//        System.out.printf("ЦФ, ELECTRE_TRI_and_TOPSIS: %,.2f %n", Distribution.distributeWithELECTRE_TRI_and_TOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+        System.out.printf("ЦФ, рандом: %,.2f %n", Distribution.distributeProductsRandomly(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+        System.out.printf("ЦФ, TOPSIS: %,.2f %n", Distribution.distributeWithTOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+        System.out.printf("ЦФ, ELECTRE_TRI: %,.2f %n", Distribution.distributeWithELECTRE_TRI(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
+        System.out.printf("ЦФ, ELECTRE_TRI_and_TOPSIS: %,.2f %n", Distribution.distributeWithELECTRE_TRI_and_TOPSIS(Warehouse.copy(warehouse), new ArrayList<Product>(products)));
 
         GeneticSolution geneticSolution = GeneticSolution.runGeneticAlgorithm(Warehouse.copy(warehouse),
-                new ArrayList<Product>(products), 10, 300000);
+                new ArrayList<Product>(products), 10, 1000);
 
         System.out.printf("ЦФ, Генетический алгоритм: %,.2f %n", geneticSolution.getFitness());
 
